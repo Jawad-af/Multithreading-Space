@@ -18,7 +18,7 @@ public class ChopStick {
     public boolean pickUp(Philosopher philosopher, ChopsticksPosition position) {
         try {
             if (lock.tryLock(10, TimeUnit.MILLISECONDS)) {
-                System.out.println(philosopher + " has picked up " + position.toString() + this.toString());
+                System.out.println(philosopher + " has picked up " + position.toString() + " " + this.toString());
                 return true;
             }
         } catch (InterruptedException e) {
@@ -30,5 +30,26 @@ public class ChopStick {
     public void putDown(Philosopher philosopher, ChopsticksPosition position) {
         lock.unlock();
         System.out.println(philosopher + " has put down the " + position.toString() + this.toString());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Lock getLock() {
+        return lock;
+    }
+
+    public void setLock(Lock lock) {
+        this.lock = lock;
+    }
+
+    @Override
+    public String toString() {
+        return "ChopStick " + id ;
     }
 }
