@@ -23,8 +23,8 @@ public class SearchFileMultipleThreads {
             if (f.getName().contains(fileName)) {
                 matches.add(f);
             }
-            // }
             lock.unlock();
+            // }
             if (f.isDirectory()) {
                 Thread t = new Thread(() -> {
                     try {
