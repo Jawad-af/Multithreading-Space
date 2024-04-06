@@ -7,8 +7,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class SearchFileMultipleThreads {
-    static List<File> matches = new ArrayList<>();
-    static Lock lock = new ReentrantLock();
+    static List<File> matches = new ArrayList<>(); // WE CAN USE THE CopyToWriteArrayList AND GET RID OF THE MANUAL SYNCH
+    static Lock lock = new ReentrantLock(); // WE CAN USE SYNCHRONIZE BLOCK INSTEAD OF THE LOCK
 
     public void find(File file, String fileName) throws InterruptedException {
         System.out.println("Searching in " + file.getAbsolutePath());
@@ -18,10 +18,12 @@ public class SearchFileMultipleThreads {
             return;
         }
         for (File f : files) {
+            // Synchronized(This) {
             lock.lock();
             if (f.getName().contains(fileName)) {
                 matches.add(f);
             }
+            // }
             lock.unlock();
             if (f.isDirectory()) {
                 Thread t = new Thread(() -> {
